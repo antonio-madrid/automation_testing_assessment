@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.24.0",
     "typescript": "^4.5.2",
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",
@@ -23,5 +23,5 @@
     "@types/jest": "^27.0.2"
   },
   "keywords": [],
-  "description": "Autmation framework to a Shopping cart app"
+  "description": "Automation framework to a Shopping cart app"
 }

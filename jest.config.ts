@@ -15,3 +15,5 @@ const config: Config.InitialOptions = {
   json: true,
   reporters: ['default', 'jest-html-reporters']
 };
+
+export default config;

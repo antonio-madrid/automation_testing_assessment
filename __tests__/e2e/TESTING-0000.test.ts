@@ -1,5 +1,5 @@
 import { Browser, BrowserContext, Page } from 'playwright';
-import WebDriver from '../../test/core/WebDriver';
+import WebDriver from '../../src/core/WebDriver';
 
 jest.setTimeout(30000);
 
@@ -8,7 +8,6 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
   let browser: Browser;
   let context: BrowserContext;
   let page: Page;
-
   // Pages
 
   beforeAll(async () => {
