@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+app:
+  build:
+    expose:
+      - '8081'
+    ports:
+      - '8081:8081'
+    volumes:
+      - .:/app
+    container_name: app

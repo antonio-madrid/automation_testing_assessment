@@ -1,7 +1,7 @@
 import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
 
-jest.setTimeout(30000);
+jest.setTimeout(300000);
 
 describe(`${process.env.TEST_TITLE} first e2e test`, () => {
   // Browser conf
@@ -22,11 +22,15 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
     await browser.close();
   });
 
-  describe('Step 1 - Go to Wikipedia', () => {
-    it('Should go to Wikipedia', async () => {
-      await page.goto('https://www.wikipedia.org');
+  describe('Step 1 - Go to Index', () => {
+    it('Should go to Index', async () => {
+      await page.goto('http://localhost:3000/');
 
-      await page.pause();
+      const title = await page.title();
+
+      // await page.pause();
+
+      expect(title).toBe('React Shopping Cart');
     });
   });
 });

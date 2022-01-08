@@ -1,4 +1,4 @@
-import playwright, { Browser, BrowserContext, BrowserType, LaunchOptions, Page } from 'playwright';
+import playwright, { Browser, BrowserType, LaunchOptions } from 'playwright';
 
 export enum Browsers {
   CHROMIUM = 'chromium',
@@ -57,8 +57,8 @@ export default class WebDriver {
       }
 
       console.warn('Max retries executed, will not try again');
-      return undefined;
     }
+    return undefined;
   }
 
   public static async getContext(browser: Browser) {
