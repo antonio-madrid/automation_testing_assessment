@@ -51,23 +51,27 @@ describe(`${process.env.TEST_TITLE} It checks all values of size component are o
 
     describe('Step 2 - Check Size Component', () => {
       describe('Check size buttons text', () => {
-        it('XS button has correct text', async () => {
-          sizeComponent = new SizeComponent(page);
-          const currentValue = await sizeComponent.getXSbuttonInputValue();
-
-          expect(currentValue).toBe('XS');
-        });
-
-        it('L button has correct text', async () => {
-          sizeComponent = new SizeComponent(page);
-          const currentValue = await sizeComponent.getLbuttonInputValue();
-
-          expect(currentValue).toBe('L');
-        });
-
         it('Should check that all buttons have the correct text', async () => {
           let currentValue = await sizeComponent.getButtonInputValue(SizeType.XS);
           expect(currentValue).toBe(SizeType.XS);
+
+          currentValue = await sizeComponent.getButtonInputValue(SizeType.S);
+          expect(currentValue).toBe(SizeType.S);
+
+          currentValue = await sizeComponent.getButtonInputValue(SizeType.M);
+          expect(currentValue).toBe(SizeType.M);
+
+          currentValue = await sizeComponent.getButtonInputValue(SizeType.ML);
+          expect(currentValue).toBe(SizeType.ML);
+
+          currentValue = await sizeComponent.getButtonInputValue(SizeType.L);
+          expect(currentValue).toBe(SizeType.L);
+
+          currentValue = await sizeComponent.getButtonInputValue(SizeType.XL);
+          expect(currentValue).toBe(SizeType.XL);
+
+          currentValue = await sizeComponent.getButtonInputValue(SizeType.XXL);
+          expect(currentValue).toBe(SizeType.XXL);
         });
       });
     });

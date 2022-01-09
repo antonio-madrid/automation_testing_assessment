@@ -2,11 +2,14 @@ import { Page } from 'playwright';
 import BasePage, { Selector } from '../../BasePage';
 
 export enum SizeType {
-  X = 'X',
   XS = 'XS',
+  S = 'S',
   M = 'M',
+  ML = 'ML',
   L = 'L',
-  XL = 'XL'
+  X = 'X',
+  XL = 'XL',
+  XXL = 'XXL'
 }
 
 export default class SizeComponent extends BasePage {
@@ -18,31 +21,7 @@ export default class SizeComponent extends BasePage {
     value: 'h4.title >>  text=Sizes'
   };
 
-  private readonly SbuttonSelector: Selector = {
-    name: `${this.className}.Sbutton`,
-    value: 'input[type=checkbox][value=S]'
-  };
-
-  private readonly MbuttonSelector: Selector = {
-    name: `${this.className}.Mbutton`,
-    value: 'input[type=checkbox][value=L]'
-  };
-
-  private readonly MLbuttonSelector: Selector = {
-    name: `${this.className}.MLbutton`,
-    value: 'input[type=checkbox][value=ML]'
-  };
-
-  private readonly XLbuttonSelector: Selector = {
-    name: `${this.className}.XLbutton`,
-    value: 'input[type=checkbox][value=XL]'
-  };
-
-  private readonly XXbuttonSelector: Selector = {
-    name: `${this.className}.XXLbutton`,
-    value: 'input[type=checkbox][value=XXL]'
-  };
-
+  /** It serves as a base for all button selectors, the rest are created dynamically on the fly. */
   private readonly buttonBaseSelector: Selector = {
     name: this.className,
     value: 'input[type=checkbox][value='
@@ -56,6 +35,7 @@ export default class SizeComponent extends BasePage {
     await super.waitUntilIsDisplayedBase(this.titleSelector);
   }
 
+  /** It reduces repetitive code, creating selectors on the fly. Alternative is getting lot of boiler plate code and selectors around the class, having almost the same code. */
   private getSizeButtonSelector(buttonType: SizeType) {
     const buttonSelector: Selector = {
       name: `${this.buttonBaseSelector.name}.${buttonType}`,
@@ -65,31 +45,11 @@ export default class SizeComponent extends BasePage {
     return buttonSelector;
   }
 
-  public async getXSbuttonInputValue() {
-    const XSbuttonSelector = this.getSizeButtonSelector(SizeType.XS);
-    const XSinputLocator = await super.getLocator(XSbuttonSelector);
-
-    return XSinputLocator.inputValue();
-  }
-
-  public async getLbuttonInputValue() {
-    const LbuttonSelector = this.getSizeButtonSelector(SizeType.L);
-    const LinputLocator = await super.getLocator(LbuttonSelector);
-
-    return LinputLocator.inputValue();
-  }
-
+  /** It reduces repetitive code, creating selectors on the fly. Alternative is getting lots of getters for the purpose. */
   public async getButtonInputValue(sizeType: SizeType) {
     const buttonSelector = this.getSizeButtonSelector(sizeType);
     const inputLocator = await super.getLocator(buttonSelector);
 
     return inputLocator.inputValue();
-  }
-
-  public async selectLbutton() {
-    const LbuttonSelector = this.getSizeButtonSelector(SizeType.L);
-    const LinputLocator = await super.getLocator(LbuttonSelector);
-
-    await LinputLocator.click();
   }
 }
