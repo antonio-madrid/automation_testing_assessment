@@ -1,4 +1,3 @@
-import exp from 'constants';
 import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
 import GridComponent from '../../src/pages/components/GridComponent/GridComponent';

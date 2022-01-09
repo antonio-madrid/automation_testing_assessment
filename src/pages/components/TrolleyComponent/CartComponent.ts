@@ -1,7 +1,7 @@
 import { Page } from 'playwright';
-import BasePage, { Selector } from '../../../BasePage';
+import BasePage, { Selector } from '../../BasePage';
 
-export default class TrolleyIconComponent extends BasePage {
+export default class CartComponent extends BasePage {
   private readonly className = this.constructor.name;
 
   // Selectors
