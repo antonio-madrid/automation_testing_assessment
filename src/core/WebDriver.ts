@@ -10,7 +10,7 @@ export interface BrowserOptions extends LaunchOptions {
 }
 
 export default class WebDriver {
-  public static async getInstance(options?: BrowserOptions) {
+  private static getBrowserOptions(options?: BrowserOptions) {
     let browserType = process.env.BROWSER_TYPE ? process.env.BROWSER_TYPE : Browsers.CHROMIUM;
     if (options && options.browserType) {
       browserType = options.browserType;
@@ -33,14 +33,25 @@ export default class WebDriver {
       slowMo = 10;
     }
 
+    const browserOptions: BrowserOptions = {
+      browserType: Browsers[browserType.toUpperCase()],
+      headless,
+      slowMo
+    };
+
+    return browserOptions;
+  }
+
+  public static async getInstance(options?: BrowserOptions) {
+    const browserOptions = this.getBrowserOptions(options);
     let browser: Browser;
     const max_retries = 5;
 
     for (let i = 0; i < max_retries; i++) {
       try {
-        browser = await (playwright[browserType] as BrowserType).launch({
-          headless,
-          slowMo,
+        browser = await playwright[browserOptions.browserType].launch({
+          headless: browserOptions.headless,
+          slowMo: browserOptions.slowMo,
           args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
