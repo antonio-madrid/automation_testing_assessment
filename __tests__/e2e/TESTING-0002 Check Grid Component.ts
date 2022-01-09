@@ -1,3 +1,4 @@
+import exp from 'constants';
 import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
 import GridComponent from '../../src/pages/components/GridComponent/GridComponent';
@@ -7,7 +8,8 @@ import URLBuilder from '../../src/tools/URLBuilder';
 import { expectedTitle } from '../validationData/IndexPageData';
 import {
   expectedAddToCartText,
-  expectedFreeShippingText
+  expectedFreeShippingText,
+  itemTitles
 } from '../validationData/ShirtComponentData';
 
 jest.setTimeout(300000);
@@ -49,27 +51,45 @@ describe(`${process.env.TEST_TITLE} It checks Grid Component.`, () => {
       await page.goto(url.href);
       await indexPage.waitUntilIsDisplayed();
 
-      const title = await indexPage.getTitle();
+      const currentTitle = await indexPage.getTitle();
 
-      expect(title).toBe(expectedTitle);
+      expect(currentTitle).toBe(expectedTitle);
     });
 
     describe('Step 2 - Check all "Free shipping" labels texts', () => {
       it('Should check all Free Shippings labels texts', async () => {
         shirtComponent = new ShirtComponent(page);
 
-        const texts = await shirtComponent.getAllFreeShippingTexts();
+        const currentTexts = await shirtComponent.getAllFreeShippingTexts();
 
-        texts.forEach((text) => {
-          expect(text).toBe(expectedFreeShippingText);
+        currentTexts.forEach((currentText) => {
+          expect(currentText).toBe(expectedFreeShippingText);
         });
       });
-      describe('Step 3 - Check all "Add to cart" labels texts', () => {
-        it('Should check all "Add to cart" labels texts', async () => {
-          const texts = await shirtComponent.getAllAddToCartTexts();
+    });
 
-          texts.forEach((text) => expect(text).toBe(expectedAddToCartText));
-        });
+    describe('Step 3 - Check all "Add to cart" labels texts', () => {
+      it('Should check all "Add to cart" labels texts', async () => {
+        const currentTexts = await shirtComponent.getAllAddToCartTexts();
+
+        currentTexts.forEach((currentText) => expect(currentText).toBe(expectedAddToCartText));
+      });
+    });
+
+    describe('Step 4 - Check all item titles', () => {
+      it('Should not have any item title repeated', async () => {
+        const currentItemTitles = await shirtComponent.getAllItemNames();
+
+        // This test always fails because 'Cat Tee Black T-Shirt' is repeated, that's an error
+        expect(currentItemTitles).toHaveLength(new Set(currentItemTitles).size);
+      });
+
+      it('Should have all item titles ok', async () => {
+        const currentItemTitles = await shirtComponent.getAllItemNames();
+
+        const expectedItemsTitle = itemTitles;
+
+        expect(currentItemTitles).toEqual(expectedItemsTitle);
       });
     });
   });

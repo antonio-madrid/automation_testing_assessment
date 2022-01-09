@@ -33,7 +33,10 @@ export default class ShirtComponent extends BasePage {
   }
 
   public async getAllAddToCartTexts() {
-    // await this.page.pause();
     return this.page.locator(this.addToCartSelector.value).allInnerTexts();
+  }
+
+  public async getAllItemNames() {
+    return this.page.locator('p.shelf-item__title').allInnerTexts();
   }
 }
