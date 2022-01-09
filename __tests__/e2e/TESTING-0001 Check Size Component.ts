@@ -4,7 +4,7 @@ import SizeComponent, { SizeType } from '../../src/pages/components/SizeComponen
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
 import { expectedTitle } from '../validationData/indexPageData';
-import { expectedLinputValue } from '../validationData/sizeComponentData';
+import { expectedTitleTest } from '../validationData/sizeComponentData';
 
 jest.setTimeout(300000);
 
@@ -50,6 +50,15 @@ describe(`${process.env.TEST_TITLE} It checks all values of size component are o
     });
 
     describe('Step 2 - Check Size Component', () => {
+      describe('Check Size Component title', () => {
+        it('Should have the correct text', async () => {
+          sizeComponent = new SizeComponent(page);
+
+          const currentTitle = await sizeComponent.getTitleText();
+          expect(currentTitle).toBe(expectedTitleTest);
+        });
+      });
+
       describe('Check size buttons text', () => {
         it('Should check that all buttons have the correct text', async () => {
           let currentValue = await sizeComponent.getButtonInputValue(SizeType.XS);
@@ -72,6 +81,7 @@ describe(`${process.env.TEST_TITLE} It checks all values of size component are o
 
           currentValue = await sizeComponent.getButtonInputValue(SizeType.XXL);
           expect(currentValue).toBe(SizeType.XXL);
+          // await page.pause();
         });
       });
     });

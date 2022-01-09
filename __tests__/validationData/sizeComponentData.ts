@@ -1,1 +1,1 @@
-export const expectedLinputValue = 'L';
+export const expectedTitleTest = 'Sizes:';

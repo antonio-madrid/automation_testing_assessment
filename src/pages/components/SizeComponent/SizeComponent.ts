@@ -52,4 +52,9 @@ export default class SizeComponent extends BasePage {
 
     return inputLocator.inputValue();
   }
+
+  public async getTitleText() {
+    const titleLocator = await super.getLocator(this.titleSelector);
+    return titleLocator.innerText();
+  }
 }
