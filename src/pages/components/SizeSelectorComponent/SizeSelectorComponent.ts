@@ -12,7 +12,7 @@ export enum SizeType {
   XXL = 'XXL'
 }
 
-export default class SizeComponent extends BasePage {
+export default class SizeSelectorComponent extends BasePage {
   private readonly className = this.constructor.name;
 
   // Selectors
@@ -56,5 +56,16 @@ export default class SizeComponent extends BasePage {
   public async getTitleText() {
     const titleLocator = await super.getLocator(this.titleSelector);
     return titleLocator.innerText();
+  }
+
+  // TODO: WIP: somehow, element styles cannot be retrieved, neither by querySelector()
+  public async checkStyle() {
+    const buttonSelector = this.getSizeButtonSelector(SizeType.L);
+    const locator = await super.getLocator(buttonSelector);
+
+    const style = await locator.evaluate((Element) => getComputedStyle(Element));
+    await this.page.pause();
+
+    console.log(style);
   }
 }

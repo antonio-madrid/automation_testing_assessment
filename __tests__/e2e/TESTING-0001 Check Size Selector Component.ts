@@ -1,14 +1,16 @@
 import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
-import SizeComponent, { SizeType } from '../../src/pages/components/SizeComponent/SizeComponent';
+import SizeSelectorComponent, {
+  SizeType
+} from '../../src/pages/components/SizeSelectorComponent/SizeSelectorComponent';
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
-import { expectedTitle } from '../validationData/indexPageData';
-import { expectedTitleTest } from '../validationData/sizeComponentData';
+import { expectedTitle } from '../validationData/IndexPageData';
+import { expectedTitleTest } from '../validationData/SizeComponentData';
 
 jest.setTimeout(300000);
 
-describe(`${process.env.TEST_TITLE} It checks all values of size component are ok.`, () => {
+describe(`${process.env.TEST_TITLE} It checks Size Selector Component.`, () => {
   // Browser conf references
   let browser: Browser;
   let context: BrowserContext;
@@ -16,7 +18,7 @@ describe(`${process.env.TEST_TITLE} It checks all values of size component are o
 
   // Pages
   let indexPage: IndexPage;
-  let sizeComponent: SizeComponent;
+  let sizeComponent: SizeSelectorComponent;
 
   // Base URI building references
   let urlBuilder: URLBuilder;
@@ -52,7 +54,7 @@ describe(`${process.env.TEST_TITLE} It checks all values of size component are o
     describe('Step 2 - Check Size Component', () => {
       describe('Check Size Component title', () => {
         it('Should have the correct text', async () => {
-          sizeComponent = new SizeComponent(page);
+          sizeComponent = new SizeSelectorComponent(page);
 
           const currentTitle = await sizeComponent.getTitleText();
           expect(currentTitle).toBe(expectedTitleTest);
@@ -81,7 +83,10 @@ describe(`${process.env.TEST_TITLE} It checks all values of size component are o
 
           currentValue = await sizeComponent.getButtonInputValue(SizeType.XXL);
           expect(currentValue).toBe(SizeType.XXL);
-          // await page.pause();
+        });
+
+        it.skip('check colors', async () => {
+          await sizeComponent.checkStyle();
         });
       });
     });

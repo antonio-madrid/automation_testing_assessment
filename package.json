@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "npx jest --detectOpenHandles --runInBand",
-    "test:debug": "PWDEBUG=1 npx jest --detectOpenHandles --runInBand",
+    "debug": "PWDEBUG=1 npx jest --detectOpenHandles --runInBand",
     "e2e": "npx jest --detectOpenHandles --runInBand /e2e",
     "endpoints": "npx jest --detectOpenHandles --runInBand /endpoints",
     "docker:up": "docker-compose up",

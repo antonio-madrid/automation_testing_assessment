@@ -5,9 +5,14 @@ export default class ShirtComponent extends BasePage {
   private readonly className = this.constructor.name;
 
   // Selectors
-  private readonly logoSelector: Selector = {
-    name: `${this.className}.logoSelector`,
-    value: ''
+  private readonly freeShippingSelector: Selector = {
+    name: `${this.className}.freeShippingSelector`,
+    value: 'div.shelf-stopper >> text="Free shipping"'
+  };
+
+  private readonly addToCartSelector: Selector = {
+    name: `${this.className}.addToCartSelector`,
+    value: 'div.shelf-item__buy-btn >> text="Add to cart"'
   };
 
   public constructor(page: Page) {
@@ -15,10 +20,20 @@ export default class ShirtComponent extends BasePage {
   }
 
   public async waitUntilIsDisplayed() {
-    await super.waitUntilIsDisplayedBase(this.logoSelector);
+    await super.waitUntilIsDisplayedBase(this.freeShippingSelector);
   }
 
-  public async doSomething() {}
+  public async getFirstFreeShippingSelectorText() {
+    return this.page.locator(this.freeShippingSelector.value).first().innerText();
+  }
 
-  private async doSomethingPrivately() {}
+  public async getAllFreeShippingTexts() {
+    // Locators strictness = locator throw an error if more than element is pointed, but it can handle multiple elements with special methods
+    return this.page.locator(this.freeShippingSelector.value).allInnerTexts();
+  }
+
+  public async getAllAddToCartTexts() {
+    // await this.page.pause();
+    return this.page.locator(this.addToCartSelector.value).allInnerTexts();
+  }
 }

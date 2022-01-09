@@ -1,7 +1,7 @@
 import exp from 'constants';
 import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
-import SizeComponent from '../../src/pages/components/SizeComponent/SizeComponent';
+import SizeSelectorComponent from '../../src/pages/components/SizeSelectorComponent/SizeSelectorComponent';
 import URLBuilder from '../../src/tools/URLBuilder';
 
 jest.setTimeout(300000);
@@ -12,7 +12,7 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
   let context: BrowserContext;
   let page: Page;
   // Pages
-  let sizeComponent: SizeComponent;
+  let sizeComponent: SizeSelectorComponent;
 
   let urlBuilder: URLBuilder;
   let url: URL;
