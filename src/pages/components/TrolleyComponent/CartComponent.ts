@@ -1,13 +1,13 @@
 import { Page } from 'playwright';
-import BasePage, { Selector } from '../../BasePage';
+import BasePage, { Selector, WaitOptions } from '../../BasePage';
 
 export default class CartComponent extends BasePage {
   private readonly className = this.constructor.name;
 
   // Selectors
-  private readonly logoSelector: Selector = {
-    name: `${this.className}.logoSelector`,
-    value: ''
+  private readonly cartComponentSelector: Selector = {
+    name: `${this.className}.cartComponentSelector`,
+    value: '.float-cart.float-cart--open'
   };
 
   public constructor(page: Page) {
@@ -15,10 +15,10 @@ export default class CartComponent extends BasePage {
   }
 
   public async waitUntilIsDisplayed() {
-    await super.waitUntilIsDisplayedBase(this.logoSelector);
+    await super.waitUntilIsDisplayedBase(this.cartComponentSelector);
   }
 
-  public async doSomething() {}
-
-  private async doSomethingPrivately() {}
+  public async waitUntilIsNotDisplayed() {
+    await super.waitUntilIsNotDisplayedBase(this.cartComponentSelector);
+  }
 }

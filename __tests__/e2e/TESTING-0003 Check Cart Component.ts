@@ -1,5 +1,6 @@
 import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
+import CartComponent from '../../src/pages/components/TrolleyComponent/CartComponent';
 import CartIconComponent from '../../src/pages/components/TrolleyComponent/CartComponents/CartIconComponent';
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
@@ -16,6 +17,7 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
   // Pages
   let indexPage: IndexPage;
   let cartIconComponent: CartIconComponent;
+  let cartComponent: CartComponent;
 
   // Base URI building references
   let urlBuilder: URLBuilder;
@@ -51,10 +53,16 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
     describe('Step 2 - Open Cart Component', () => {
       it('Should show cart component when clicking its icon', async () => {
         cartIconComponent = new CartIconComponent(page);
-
         await cartIconComponent.clickClosedCartIconSelector();
 
-        fail('TODO: check if cart component is being showed');
+        cartComponent = new CartComponent(page);
+        // If element is not into the DOM, Playwright will throw an error captured by Jest, indicating which element failed to load
+        await cartComponent.waitUntilIsDisplayed();
+      });
+
+      it('Should close cart when clicking "X" button', async () => {
+        await cartIconComponent.clickCloseCartIconSelector();
+        await cartComponent.waitUntilIsNotDisplayed();
       });
     });
   });

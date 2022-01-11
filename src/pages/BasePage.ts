@@ -5,6 +5,13 @@ export interface Selector {
   value: string;
 }
 
+export enum WaitOptions {
+  ATTACHED = 'attached',
+  DETACHED = 'detached',
+  VISIBLE = 'visible',
+  HIDDEN = 'hidden'
+}
+
 /** It contains Page Object common methods */
 export default abstract class {
   protected page: Page;
@@ -18,17 +25,33 @@ export default abstract class {
 
   public abstract waitUntilIsDisplayed(): void;
 
-  /** It waits for initial elements to be present in DOM, if not, returns an error */
+  /** It waits for elements to be present in DOM, if not, returns an error */
   protected async waitUntilIsDisplayedBase(selector: Selector) {
     try {
       await this.page.waitForSelector(selector.value, {
         state: 'attached',
-        timeout: 12500
+        timeout: 7500
       });
     } catch (error) {
       const redFontCode = '\x1b[31m';
       const restoreTerminalcolorCode = '\x1b[0m';
       throw Error(redFontCode + selector.name + 'not found' + restoreTerminalcolorCode);
+    }
+  }
+
+  /** It not waits for elements to be present in DOM, if not, returns an error */
+  protected async waitUntilIsNotDisplayedBase(selector: Selector) {
+    try {
+      await this.page.waitForSelector(selector.value, {
+        state: 'detached',
+        timeout: 7500
+      });
+    } catch (error) {
+      const redFontCode = '\x1b[31m';
+      const restoreTerminalcolorCode = '\x1b[0m';
+      throw Error(
+        redFontCode + selector.name + ' not detached from HTML DOM' + restoreTerminalcolorCode
+      );
     }
   }
 

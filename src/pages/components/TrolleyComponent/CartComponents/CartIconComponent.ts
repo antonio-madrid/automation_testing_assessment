@@ -13,7 +13,7 @@ export default class CartIconComponent extends BasePage {
 
   private readonly closeCartIconSelector: Selector = {
     name: `${this.className}.closeCartIconSelector`,
-    value: 'float-cart__close-btn'
+    value: '.float-cart__close-btn'
   };
 
   public constructor(page: Page) {
@@ -27,5 +27,10 @@ export default class CartIconComponent extends BasePage {
   public async clickClosedCartIconSelector() {
     const closedCartIconLocator = await super.getLocator(this.closedCartIconSelector);
     await closedCartIconLocator.click();
+  }
+
+  public async clickCloseCartIconSelector() {
+    const closeCartIconLocator = await super.getLocator(this.closeCartIconSelector);
+    await closeCartIconLocator.click();
   }
 }
