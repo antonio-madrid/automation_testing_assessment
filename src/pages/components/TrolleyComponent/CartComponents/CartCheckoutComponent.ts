@@ -5,9 +5,9 @@ export default class CartCheckoutComponent extends BasePage {
   private readonly className = this.constructor.name;
 
   // Selectors
-  private readonly logoSelector: Selector = {
-    name: `${this.className}.logoSelector`,
-    value: ''
+  private readonly checkoutBtnSelector: Selector = {
+    name: `${this.className}.checkoutBtnSelector`,
+    value: 'div.buy-btn >> text="Checkout"'
   };
 
   public constructor(page: Page) {
@@ -15,10 +15,11 @@ export default class CartCheckoutComponent extends BasePage {
   }
 
   public async waitUntilIsDisplayed() {
-    await super.waitUntilIsDisplayedBase(this.logoSelector);
+    await super.waitUntilIsDisplayedBase(this.checkoutBtnSelector);
   }
 
-  public async doSomething() {}
-
-  private async doSomethingPrivately() {}
+  public async clickCheckout() {
+    const checkoutBtnLocator = await super.getLocator(this.checkoutBtnSelector);
+    await checkoutBtnLocator.click();
+  }
 }

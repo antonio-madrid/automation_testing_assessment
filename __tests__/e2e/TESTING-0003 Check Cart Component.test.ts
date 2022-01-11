@@ -1,6 +1,7 @@
 import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
 import CartComponent from '../../src/pages/components/TrolleyComponent/CartComponent';
+import CartCheckoutComponent from '../../src/pages/components/TrolleyComponent/CartComponents/CartCheckoutComponent';
 import CartIconComponent from '../../src/pages/components/TrolleyComponent/CartComponents/CartIconComponent';
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
@@ -18,6 +19,7 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
   let indexPage: IndexPage;
   let cartIconComponent: CartIconComponent;
   let cartComponent: CartComponent;
+  let cartCheckoutComponent: CartCheckoutComponent;
 
   // Base URI building references
   let urlBuilder: URLBuilder;
@@ -50,7 +52,7 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
       expect(currentTitle).toBe(expectedTitle);
     });
 
-    describe('Step 2 - Open Cart Component', () => {
+    describe('Step 2 - Open and Close Cart Component', () => {
       it('Should show cart component when clicking its icon', async () => {
         cartIconComponent = new CartIconComponent(page);
         await cartIconComponent.clickClosedCartIconSelector();
@@ -63,6 +65,22 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
       it('Should close cart when clicking "X" button', async () => {
         await cartIconComponent.clickCloseCartIconSelector();
         await cartComponent.waitUntilIsNotDisplayed();
+      });
+
+      describe('Check dialog', () => {
+        it('Should check out nothing', async () => {
+          await cartIconComponent.clickClosedCartIconSelector();
+          await cartComponent.waitUntilIsDisplayed();
+
+          cartCheckoutComponent = new CartCheckoutComponent(page);
+
+          await cartCheckoutComponent.clickCheckout();
+
+          page.on('dialog', async (dialog) => {
+            console.log('----------------------' + dialog.message());
+            await dialog.accept();
+          });
+        });
       });
     });
   });
