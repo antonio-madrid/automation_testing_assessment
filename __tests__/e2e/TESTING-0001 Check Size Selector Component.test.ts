@@ -50,45 +50,59 @@ describe(`${process.env.TEST_TITLE} It checks Size Selector Component.`, () => {
 
       expect(title).toBe(expectedTitle);
     });
+  });
 
-    describe('Step 2 - Check Size Component', () => {
-      describe('Check Size Component title', () => {
-        it('Should have the correct text', async () => {
-          sizeComponent = new SizeSelectorComponent(page);
+  describe('Step 2 - Check Size Component', () => {
+    it('Should have the correct title', async () => {
+      sizeComponent = new SizeSelectorComponent(page);
 
-          const currentTitle = await sizeComponent.getTitleText();
-          expect(currentTitle).toBe(expectedTitleTest);
+      const currentTitle = await sizeComponent.getTitleText();
+      expect(currentTitle).toBe(expectedTitleTest);
+    });
+  });
+
+  describe('Step 3 - Check size buttons text', () => {
+    it('Should check that all buttons have the correct text', async () => {
+      let currentValue = await sizeComponent.getButtonInputValue(SizeType.XS);
+      expect(currentValue).toBe(SizeType.XS);
+
+      currentValue = await sizeComponent.getButtonInputValue(SizeType.S);
+      expect(currentValue).toBe(SizeType.S);
+
+      currentValue = await sizeComponent.getButtonInputValue(SizeType.M);
+      expect(currentValue).toBe(SizeType.M);
+
+      currentValue = await sizeComponent.getButtonInputValue(SizeType.ML);
+      expect(currentValue).toBe(SizeType.ML);
+
+      currentValue = await sizeComponent.getButtonInputValue(SizeType.L);
+      expect(currentValue).toBe(SizeType.L);
+
+      currentValue = await sizeComponent.getButtonInputValue(SizeType.XL);
+      expect(currentValue).toBe(SizeType.XL);
+
+      currentValue = await sizeComponent.getButtonInputValue(SizeType.XXL);
+      expect(currentValue).toBe(SizeType.XXL);
+    });
+  });
+
+  describe('Step 4 -  Check buttons color', () => {
+    it('Should have buttons color as grey', async () => {
+      const elementHandles = await sizeComponent.getSizeElements();
+
+      // When using Jest, you cannot use Playwright assertions,
+      // so this is a workaround to check CSS styles without using Playwright native assertions
+      for (let elementHandle of elementHandles) {
+        await elementHandle.evaluate(async (HTMLElement) => {
+          const element = HTMLElement as Element;
+          const currentColor = window.getComputedStyle(element).backgroundColor;
+          const grey = 'rgb(236, 236, 236)';
+
+          if (currentColor !== grey) {
+            throw new Error('Size selector buttons are not grey');
+          }
         });
-      });
-
-      describe('Check size buttons text', () => {
-        it('Should check that all buttons have the correct text', async () => {
-          let currentValue = await sizeComponent.getButtonInputValue(SizeType.XS);
-          expect(currentValue).toBe(SizeType.XS);
-
-          currentValue = await sizeComponent.getButtonInputValue(SizeType.S);
-          expect(currentValue).toBe(SizeType.S);
-
-          currentValue = await sizeComponent.getButtonInputValue(SizeType.M);
-          expect(currentValue).toBe(SizeType.M);
-
-          currentValue = await sizeComponent.getButtonInputValue(SizeType.ML);
-          expect(currentValue).toBe(SizeType.ML);
-
-          currentValue = await sizeComponent.getButtonInputValue(SizeType.L);
-          expect(currentValue).toBe(SizeType.L);
-
-          currentValue = await sizeComponent.getButtonInputValue(SizeType.XL);
-          expect(currentValue).toBe(SizeType.XL);
-
-          currentValue = await sizeComponent.getButtonInputValue(SizeType.XXL);
-          expect(currentValue).toBe(SizeType.XXL);
-        });
-
-        it('check colors', async () => {
-          await sizeComponent.checkStyle();
-        });
-      });
+      }
     });
   });
 });

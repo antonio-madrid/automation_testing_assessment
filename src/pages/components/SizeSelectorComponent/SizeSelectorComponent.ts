@@ -58,8 +58,7 @@ export default class SizeSelectorComponent extends BasePage {
     return titleLocator.innerText();
   }
 
-  // TODO: WIP: somehow, element styles cannot be retrieved, neither by querySelector()
-  public async checkStyle() {
+  public async getButtonColor() {
     const properLocator = this.page.locator('.filters-available-size label .checkmark').first();
 
     const computerizedCSSstyle = await properLocator.evaluate((HTMLElement) => {
@@ -67,6 +66,11 @@ export default class SizeSelectorComponent extends BasePage {
       return window.getComputedStyle(element);
     });
 
-    console.log(computerizedCSSstyle.backgroundColor);
+    return computerizedCSSstyle.backgroundColor;
+  }
+
+  public async getSizeElements() {
+    const properLocator = this.page.locator('.filters-available-size label .checkmark');
+    return properLocator.elementHandles();
   }
 }
