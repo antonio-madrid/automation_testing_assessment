@@ -85,7 +85,7 @@ describe(`${process.env.TEST_TITLE} It checks Size Selector Component.`, () => {
           expect(currentValue).toBe(SizeType.XXL);
         });
 
-        it.skip('check colors', async () => {
+        it('check colors', async () => {
           await sizeComponent.checkStyle();
         });
       });

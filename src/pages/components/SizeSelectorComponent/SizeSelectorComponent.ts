@@ -60,12 +60,13 @@ export default class SizeSelectorComponent extends BasePage {
 
   // TODO: WIP: somehow, element styles cannot be retrieved, neither by querySelector()
   public async checkStyle() {
-    const buttonSelector = this.getSizeButtonSelector(SizeType.L);
-    const locator = await super.getLocator(buttonSelector);
+    const properLocator = this.page.locator('.filters-available-size label .checkmark').first();
 
-    const style = await locator.evaluate((Element) => getComputedStyle(Element));
-    await this.page.pause();
+    const computerizedCSSstyle = await properLocator.evaluate((HTMLElement) => {
+      const element = HTMLElement as Element;
+      return window.getComputedStyle(element);
+    });
 
-    console.log(style);
+    console.log(computerizedCSSstyle.backgroundColor);
   }
 }
