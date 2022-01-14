@@ -69,7 +69,7 @@ export default class WebDriver {
 
       console.warn('Max retries executed, will not try again');
     }
-    return undefined;
+    throw new Error('Unable to start up the browser configuration.');
   }
 
   public static async getContext(browser: Browser) {

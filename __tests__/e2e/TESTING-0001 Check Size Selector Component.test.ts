@@ -5,6 +5,7 @@ import SizeSelectorComponent, {
 } from '../../src/pages/components/SizeSelectorComponent/SizeSelectorComponent';
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
+import Utils from '../../src/tools/Utils';
 import { expectedTitle } from '../validationData/IndexPageData';
 import { expectedTitleTest } from '../validationData/SizeComponentData';
 
@@ -87,22 +88,34 @@ describe(`${process.env.TEST_TITLE} It checks Size Selector Component.`, () => {
   });
 
   describe('Step 4 -  Check buttons color', () => {
+    it('Should have first button as grey', async () => {
+      const firstBtnColor = await sizeComponent.getButtonColor();
+      const grey = 'rgb(236, 236, 236)';
+
+      expect(firstBtnColor).toEqual(grey);
+    });
+
     it('Should have buttons color as grey', async () => {
       const elementHandles = await sizeComponent.getSizeElements();
+
+      const grey = 'rgb(236, 236, 236)';
 
       // When using Jest, you cannot use Playwright assertions,
       // so this is a workaround to check CSS styles without using Playwright native assertions
       for (let elementHandle of elementHandles) {
-        await elementHandle.evaluate(async (HTMLElement) => {
+        await elementHandle.evaluate(async (HTMLElement, expectedColor) => {
           const element = HTMLElement as Element;
           const currentColor = window.getComputedStyle(element).backgroundColor;
-          const grey = 'rgb(236, 236, 236)';
 
-          if (currentColor !== grey) {
+          if (currentColor !== expectedColor) {
             throw new Error('Size selector buttons are not grey');
           }
-        });
+        }, grey);
       }
+
+      // new implementation
+      const utils = new Utils();
+      await utils.checkCSSProperty(elementHandles[0], 'backgroundColor', grey);
     });
   });
 });
