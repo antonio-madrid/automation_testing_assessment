@@ -46,9 +46,9 @@ describe(`${process.env.TEST_TITLE} It checks Size Selector Component.`, () => {
       await page.goto(baseUrl.href);
       await indexPage.waitUntilIsDisplayed();
 
-      const title = await indexPage.getTitle();
+      const currentTitle = await indexPage.getTitle();
 
-      expect(title).toBe(expectedTitle);
+      expect(currentTitle).toBe(expectedTitle);
     });
   });
 
@@ -88,10 +88,10 @@ describe(`${process.env.TEST_TITLE} It checks Size Selector Component.`, () => {
 
   describe('Step 4 -  Check buttons color', () => {
     it('Should have first button as grey', async () => {
-      const firstBtnColor = await sizeComponent.getFirstButtonColor();
+      const currentFirstBtnColor = await sizeComponent.getFirstButtonColor();
       const grey = 'rgb(236, 236, 236)';
 
-      expect(firstBtnColor).toEqual(grey);
+      expect(currentFirstBtnColor).toEqual(grey);
     });
 
     it('Should have all buttons colors as grey', async () => {
