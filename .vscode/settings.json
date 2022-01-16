@@ -1,4 +1,6 @@
 {
   "git.ignoreLimitWarning": true,
-  "cSpell.words": ["domcontentloaded", "globalthis", "Lbutton", "Linput"]
+  "cSpell.words": ["checkmark", "domcontentloaded", "expec", "globalthis", "Lbutton", "Linput"],
+  // Linux & Windows Fira Code Retina option
+  "editor.fontFamily": "Fira Code Retina"
 }

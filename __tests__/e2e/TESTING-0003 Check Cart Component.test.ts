@@ -1,8 +1,8 @@
 import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
-import CartComponent from '../../src/pages/components/TrolleyComponent/CartComponent';
-import CartCheckoutComponent from '../../src/pages/components/TrolleyComponent/CartComponents/CartCheckoutComponent';
-import CartIconComponent from '../../src/pages/components/TrolleyComponent/CartComponents/CartIconComponent';
+import CartComponent from '../../src/pages/components/CartComponent/CartComponent';
+import CartCheckoutComponent from '../../src/pages/components/CartComponent/CartComponents/CartCheckoutComponent';
+import CartIconComponent from '../../src/pages/components/CartComponent/CartComponents/CartIconComponent';
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
 import { expectedTitle } from '../validationData/IndexPageData';
@@ -59,18 +59,18 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
 
         cartComponent = new CartComponent(page);
         // If element is not into the DOM, Playwright will throw an error captured by Jest, indicating which element failed to load
-        await cartComponent.waitUntilIsDisplayed();
+        await cartComponent.waitUntilCartIsOpened();
       });
 
       it('Should close cart when clicking "X" button', async () => {
         await cartIconComponent.clickCloseCartIconSelector();
-        await cartComponent.waitUntilIsNotDisplayed();
+        await cartComponent.waitUntilCartIsNotOpened();
       });
 
       describe('Check dialog', () => {
         it('Should check out nothing', async () => {
           await cartIconComponent.clickClosedCartIconSelector();
-          await cartComponent.waitUntilIsDisplayed();
+          await cartComponent.waitUntilCartIsOpened();
 
           cartCheckoutComponent = new CartCheckoutComponent(page);
 

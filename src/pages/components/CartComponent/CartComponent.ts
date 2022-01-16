@@ -7,8 +7,14 @@ export default class CartComponent extends BasePage {
   // Selectors
   private readonly cartComponentSelector: Selector = {
     name: `${this.className}.cartComponentSelector`,
+    value: 'div.float-cart'
+  };
+
+  private readonly openedCartComponentSelector: Selector = {
+    name: `${this.className}.openedCartComponentSelector`,
     value: '.float-cart.float-cart--open'
   };
+  // float-cart float-cart--open
 
   public constructor(page: Page) {
     super(page);
@@ -18,7 +24,11 @@ export default class CartComponent extends BasePage {
     await super.waitUntilIsDisplayedBase(this.cartComponentSelector);
   }
 
-  public async waitUntilIsNotDisplayed() {
-    await super.waitUntilIsNotDisplayedBase(this.cartComponentSelector);
+  public async waitUntilCartIsOpened() {
+    await super.waitUntilIsDisplayedBase(this.openedCartComponentSelector);
+  }
+
+  public async waitUntilCartIsNotOpened() {
+    await super.waitUntilIsNotDisplayedBase(this.openedCartComponentSelector);
   }
 }

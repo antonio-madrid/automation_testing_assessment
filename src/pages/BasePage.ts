@@ -35,7 +35,7 @@ export default abstract class {
     } catch (error) {
       const redFontCode = '\x1b[31m';
       const restoreTerminalcolorCode = '\x1b[0m';
-      throw Error(redFontCode + selector.name + 'not found' + restoreTerminalcolorCode);
+      throw Error(redFontCode + selector.name + ' not found' + restoreTerminalcolorCode);
     }
   }
 

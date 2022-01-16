@@ -1,7 +1,7 @@
 import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
-import GridComponent from '../../src/pages/components/GridComponent/GridComponent';
-import ShirtComponent from '../../src/pages/components/GridComponent/ShirtComponent/ShirtComponent';
+import ShelfComponent from '../../src/pages/components/ShelfComponent/ShelfComponent';
+import ShirtComponent from '../../src/pages/components/ShelfComponent/ShirtComponent/ShirtComponent';
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
 import { expectedTitle } from '../validationData/IndexPageData';
@@ -21,7 +21,7 @@ describe(`${process.env.TEST_TITLE} It checks Grid Component.`, () => {
 
   // Pages
   let indexPage: IndexPage;
-  let gridComponent: GridComponent;
+  let gridComponent: ShelfComponent;
   let shirtComponent: ShirtComponent;
 
   // Base URI building references
