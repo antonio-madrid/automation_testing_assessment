@@ -65,4 +65,9 @@ export default class ShirtComponent extends BasePage {
     const elements = await this.page.$$(this.allItemsSelector.value);
     return elements.length;
   }
+
+  public async clickAddToCart() {
+    const addToCartLocator = await super.getLocator(this.addToCartSelector);
+    await addToCartLocator.click();
+  }
 }

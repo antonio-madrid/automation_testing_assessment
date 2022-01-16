@@ -8,6 +8,7 @@ Elements have no ids.
 # TODO:
 
 - normalize current and expected values
+- Use facades as CartComponent to encapsulate list of Page Object actions
 
 # Why like this
 

@@ -10,6 +10,11 @@ export default class CartCheckoutComponent extends BasePage {
     value: 'div.buy-btn >> text="Checkout"'
   };
 
+  private readonly subtotalSelector: Selector = {
+    name: `${this.className}.subtotalSelector`,
+    value: 'p.sub-price__val'
+  };
+
   public constructor(page: Page) {
     super(page);
   }
@@ -21,5 +26,10 @@ export default class CartCheckoutComponent extends BasePage {
   public async clickCheckout() {
     const checkoutBtnLocator = await super.getLocator(this.checkoutBtnSelector);
     await checkoutBtnLocator.click();
+  }
+
+  public async getSubtotal() {
+    const subtotalLocator = await super.getLocator(this.subtotalSelector);
+    return subtotalLocator.innerText();
   }
 }

@@ -1,6 +1,9 @@
 import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
 import CartComponent from '../../src/pages/components/CartComponent/CartComponent';
+import CartCheckoutComponent from '../../src/pages/components/CartComponent/CartComponents/CartCheckoutComponent';
+import CartIconComponent from '../../src/pages/components/CartComponent/CartComponents/CartIconComponent';
+import CartListComponent from '../../src/pages/components/CartComponent/CartComponents/CartListComponent';
 import ShelfComponent from '../../src/pages/components/ShelfComponent/ShelfComponent';
 import ShirtComponent from '../../src/pages/components/ShelfComponent/ShirtComponent/ShirtComponent';
 import SizeSelectorComponent, {
@@ -23,6 +26,9 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
   let shelfComponent: ShelfComponent;
   let cartComponent: CartComponent;
   let shirtComponent: ShirtComponent;
+  let cartIconComponent: CartIconComponent;
+  let cartCheckoutComponent: CartCheckoutComponent;
+  let cartListComponent: CartListComponent;
 
   let baseUrl: URL;
 
@@ -113,5 +119,39 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
     });
   });
 
-  describe('Step 3 - ', () => {});
+  describe('Step 3 - Click "Add to cart"', () => {
+    it('Should click "Add to cart"', async () => {
+      await shirtComponent.clickAddToCart();
+
+      cartIconComponent = new CartIconComponent(page);
+      await cartComponent.waitUntilCartIsOpened();
+    });
+
+    it('Should have cart icon with number 1', async () => {
+      const currentCartIconNumber = await cartIconComponent.getCartIconNumber();
+      expect(currentCartIconNumber).toBe('1');
+    });
+
+    describe('SubStep - Check out new item added', () => {
+      it('Should have its price as $ 10.90', async () => {
+        cartListComponent = new CartListComponent(page);
+        const expectedItemPrice = '$ 10.90';
+
+        const currentItemPrice = await cartListComponent.getFirstItemPrice();
+        expect(currentItemPrice).toEqual(expectedItemPrice);
+      });
+
+      it('Should have its title as "Cat Tee Black T-Shirt"', async () => {
+        throw new Error('WIP');
+      });
+    });
+
+    it('Should have Cart Checkout component with subtotal as "$ 10.90"', async () => {
+      cartCheckoutComponent = new CartCheckoutComponent(page);
+      const expectedSubtotal = '$ 10.90';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
 });

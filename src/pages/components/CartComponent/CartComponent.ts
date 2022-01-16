@@ -14,7 +14,6 @@ export default class CartComponent extends BasePage {
     name: `${this.className}.openedCartComponentSelector`,
     value: '.float-cart.float-cart--open'
   };
-  // float-cart float-cart--open
 
   public constructor(page: Page) {
     super(page);

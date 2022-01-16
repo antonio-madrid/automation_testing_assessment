@@ -5,7 +5,6 @@ export default class CartIconComponent extends BasePage {
   private readonly className = this.constructor.name;
 
   // Selectors
-  // CSS Selector tip = to indicate more than one class, write each class without spaces and with its dot
   private readonly closedCartIconSelector: Selector = {
     name: `${this.className}.closedCartIconSelector`,
     value: 'span.bag.bag--float-cart-closed'
@@ -14,6 +13,11 @@ export default class CartIconComponent extends BasePage {
   private readonly closeCartIconSelector: Selector = {
     name: `${this.className}.closeCartIconSelector`,
     value: '.float-cart__close-btn'
+  };
+
+  private readonly cartIconNumberSelector: Selector = {
+    name: `${this.className}.cartIconNumberSelector`,
+    value: 'span.bag__quantity'
   };
 
   public constructor(page: Page) {
@@ -32,5 +36,10 @@ export default class CartIconComponent extends BasePage {
   public async clickCloseCartIconSelector() {
     const closeCartIconLocator = await super.getLocator(this.closeCartIconSelector);
     await closeCartIconLocator.click();
+  }
+
+  public async getCartIconNumber() {
+    const cartIconNumberLocator = await super.getLocator(this.cartIconNumberSelector);
+    return cartIconNumberLocator.first().innerText();
   }
 }

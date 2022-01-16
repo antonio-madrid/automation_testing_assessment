@@ -1,1 +1,1 @@
-rm r __rm -r ../__tests__/e2e/__snapshots__/
+rm -r __tests__/e2e/__snapshots__/
