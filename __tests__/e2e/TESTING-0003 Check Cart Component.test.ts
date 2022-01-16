@@ -74,12 +74,15 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
 
           cartCheckoutComponent = new CartCheckoutComponent(page);
 
+          let dialogMsg: string;
+          page.once('dialog', async (dialog) => {
+            dialogMsg = dialog.message();
+            dialog.accept();
+          });
+
           await cartCheckoutComponent.clickCheckout();
 
-          page.on('dialog', async (dialog) => {
-            console.log('----------------------' + dialog.message());
-            await dialog.accept();
-          });
+          expect(dialogMsg).toEqual('Add some product in the cart!');
         });
       });
     });

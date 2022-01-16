@@ -2,17 +2,18 @@ import { ElementHandle } from 'playwright';
 
 export default class Utils {
   /** When using Jest, you cannot use Playwright assertions,
-   * so this is a workaround to check CSS styles without using Playwright native assertions */
+   * so this is a workaround to check CSS styles without using Playwright native assertions.
+   * In addition, Playwright expect().toHaveCSS() does not compared computed CSS, in opposite this method */
   public async checkCSSProperty(
-    elementHandle: ElementHandle<Node>,
+    element: ElementHandle<Node>,
     cssProperty: string,
     expectedValue: string
   ) {
-    await elementHandle.evaluate(
+    await element.evaluate(
       async (HTMLElement, args) => {
-        const element = HTMLElement as Element;
+        const htmlElement = HTMLElement as Element;
         const cssProp = args[0];
-        const currentCSSpropValue = window.getComputedStyle(element)[cssProp];
+        const currentCSSpropValue = window.getComputedStyle(htmlElement)[cssProp];
 
         const expecValue = args[1];
         if (currentCSSpropValue !== expecValue) {
