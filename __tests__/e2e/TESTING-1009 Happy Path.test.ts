@@ -85,12 +85,12 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
     });
 
     it('Should have item with title "Cat Tee Black T-Shirt"', async () => {
-      const expectedItemName = 'Cat Tee Black T-Shirt';
+      const expectedItemTitle = 'Cat Tee Black T-Shirt';
 
-      const currentItemsNames = await shirtComponent.getAllItemsNames();
-      const currentItemName = currentItemsNames[0];
+      const currentItemsTitles = await shirtComponent.getAllItemsTitles();
+      const currentItemTite = currentItemsTitles[0];
 
-      expect(currentItemName).toEqual(expectedItemName);
+      expect(currentItemTite).toEqual(expectedItemTitle);
     });
 
     it('Should have item with price "10.90"', async () => {
@@ -120,7 +120,7 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
   });
 
   describe('Step 3 - Click "Add to cart"', () => {
-    it('Should click "Add to cart"', async () => {
+    it('Should click "Add to cart" and open Cart component', async () => {
       await shirtComponent.clickAddToCart();
 
       cartIconComponent = new CartIconComponent(page);
@@ -142,7 +142,31 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
       });
 
       it('Should have its title as "Cat Tee Black T-Shirt"', async () => {
-        throw new Error('WIP');
+        const expectedItemName = 'Cat Tee Black T-Shirt';
+
+        const currentItemName = await cartListComponent.getItemTitle();
+
+        expect(currentItemName).toEqual(expectedItemName);
+      });
+
+      it('Should have a cross button visible', async () => {
+        const isCrossBtnVisible = await cartListComponent.isItemCrossBtnVisible();
+        expect(isCrossBtnVisible).toBeTruthy();
+      });
+
+      it('Should have its "Quantity" number as 1', async () => {
+        const expectedQuantity = await cartListComponent.getItemQuantity();
+        expect(expectedQuantity).toContain('Quantity: 1');
+      });
+
+      it('Should have a minus button disabled', async () => {
+        const isMinusBtnDisabled = await cartListComponent.isMinusBtnDisabled();
+        expect(isMinusBtnDisabled).toBeTruthy();
+      });
+
+      it('Should have its proper image', async () => {
+        const thumbImg = await cartListComponent.getItemThumbImg();
+        expect(thumbImg).toMatchSnapshot();
       });
     });
 

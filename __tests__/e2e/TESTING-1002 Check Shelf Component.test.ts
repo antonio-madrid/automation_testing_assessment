@@ -74,14 +74,14 @@ describe(`${process.env.TEST_TITLE} It checks Grid Component.`, () => {
 
     describe('Step 4 - Check all item titles', () => {
       it('Should not have any item title repeated', async () => {
-        const currentItemTitles = await shirtComponent.getAllItemsNames();
+        const currentItemTitles = await shirtComponent.getAllItemsTitles();
 
         // This test always fails because 'Cat Tee Black T-Shirt' is repeated, that's an error
         expect(currentItemTitles).toHaveLength(new Set(currentItemTitles).size);
       });
 
       it('Should have all item titles ok', async () => {
-        const currentItemTitles = await shirtComponent.getAllItemsNames();
+        const currentItemTitles = await shirtComponent.getAllItemsTitles();
 
         const expectedItemsTitle = itemTitles;
 

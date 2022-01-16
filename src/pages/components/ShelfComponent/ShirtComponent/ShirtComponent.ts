@@ -51,9 +51,9 @@ export default class ShirtComponent extends BasePage {
     return this.page.locator(this.addToCartSelector.value).allInnerTexts();
   }
 
-  public async getAllItemsNames() {
-    const itemNamesLocator = await super.getLocator(this.allItemsTitleSelector);
-    return itemNamesLocator.allInnerTexts();
+  public async getAllItemsTitles() {
+    const itemTitlesLocator = await super.getLocator(this.allItemsTitleSelector);
+    return itemTitlesLocator.allInnerTexts();
   }
 
   public async getAllItemsPrices() {
