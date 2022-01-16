@@ -25,6 +25,7 @@ export default abstract class {
 
   public abstract waitUntilIsDisplayed(): void;
 
+  // TODO: extract repeated code of waitUntilIsDisplayedBase and waitUntilIsNotDisplayedBase
   /** It waits for elements to be present in DOM, if not, returns an error */
   protected async waitUntilIsDisplayedBase(selector: Selector) {
     try {
@@ -34,8 +35,8 @@ export default abstract class {
       });
     } catch (error) {
       const redFontCode = '\x1b[31m';
-      const restoreTerminalcolorCode = '\x1b[0m';
-      throw Error(redFontCode + selector.name + ' not found' + restoreTerminalcolorCode);
+      const restoreTerminalColorCode = '\x1b[0m';
+      throw Error(redFontCode + selector.name + ' not found' + restoreTerminalColorCode);
     }
   }
 
@@ -48,9 +49,9 @@ export default abstract class {
       });
     } catch (error) {
       const redFontCode = '\x1b[31m';
-      const restoreTerminalcolorCode = '\x1b[0m';
+      const restoreTerminalColorCode = '\x1b[0m';
       throw Error(
-        redFontCode + selector.name + ' not detached from HTML DOM' + restoreTerminalcolorCode
+        redFontCode + selector.name + ' not detached from HTML DOM' + restoreTerminalColorCode
       );
     }
   }

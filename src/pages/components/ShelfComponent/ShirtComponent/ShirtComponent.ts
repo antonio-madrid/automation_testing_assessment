@@ -15,6 +15,21 @@ export default class ShirtComponent extends BasePage {
     value: 'div.shelf-item__buy-btn >> text="Add to cart"'
   };
 
+  private readonly allItemsSelector: Selector = {
+    name: `${this.className}.allItemsSelector`,
+    value: 'div.shelf-item'
+  };
+
+  private readonly allItemsTitleSelector: Selector = {
+    name: `${this.className}.allItemsTitleSelector`,
+    value: 'p.shelf-item__title'
+  };
+
+  private readonly allItemsPrices: Selector = {
+    name: `${this.className}.allItemsTitleSelector`,
+    value: 'div.val'
+  };
+
   public constructor(page: Page) {
     super(page);
   }
@@ -36,7 +51,18 @@ export default class ShirtComponent extends BasePage {
     return this.page.locator(this.addToCartSelector.value).allInnerTexts();
   }
 
-  public async getAllItemNames() {
-    return this.page.locator('p.shelf-item__title').allInnerTexts();
+  public async getAllItemsNames() {
+    const itemNamesLocator = await super.getLocator(this.allItemsTitleSelector);
+    return itemNamesLocator.allInnerTexts();
+  }
+
+  public async getAllItemsPrices() {
+    const itemsPricesLocator = await super.getLocator(this.allItemsPrices);
+    return itemsPricesLocator.allInnerTexts();
+  }
+
+  public async getNumberOfItemsShown() {
+    const elements = await this.page.$$(this.allItemsSelector.value);
+    return elements.length;
   }
 }

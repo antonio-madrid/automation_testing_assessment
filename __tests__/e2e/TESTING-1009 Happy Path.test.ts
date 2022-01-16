@@ -2,6 +2,7 @@ import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
 import CartComponent from '../../src/pages/components/CartComponent/CartComponent';
 import ShelfComponent from '../../src/pages/components/ShelfComponent/ShelfComponent';
+import ShirtComponent from '../../src/pages/components/ShelfComponent/ShirtComponent/ShirtComponent';
 import SizeSelectorComponent, {
   SizeType
 } from '../../src/pages/components/SizeSelectorComponent/SizeSelectorComponent';
@@ -21,6 +22,7 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
   let sizeSelectorComponent: SizeSelectorComponent;
   let shelfComponent: ShelfComponent;
   let cartComponent: CartComponent;
+  let shirtComponent: ShirtComponent;
 
   let baseUrl: URL;
 
@@ -65,9 +67,51 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
   });
 
   describe('Step 2 - Click XS shirt button', () => {
-    it('Should have One item is displayed', async () => {
+    it('Should have one single item displayed', async () => {
       await sizeSelectorComponent.selectSize(SizeType.XS);
-      throw new Error('WIP');
+      shirtComponent = new ShirtComponent(page);
+
+      // Workaround to let actions happen, I could not be able to avoid the using of explicit wait in this part
+      await page.waitForTimeout(1000);
+
+      const currentNumberOfItemsShown = await shirtComponent.getNumberOfItemsShown();
+      expect(currentNumberOfItemsShown).toBe(1);
+    });
+
+    it('Should have item with title "Cat Tee Black T-Shirt"', async () => {
+      const expectedItemName = 'Cat Tee Black T-Shirt';
+
+      const currentItemsNames = await shirtComponent.getAllItemsNames();
+      const currentItemName = currentItemsNames[0];
+
+      expect(currentItemName).toEqual(expectedItemName);
+    });
+
+    it('Should have item with price "10.90"', async () => {
+      const expectedItemPrice = '$10.90';
+
+      const currentItemsPrices = await shirtComponent.getAllItemsPrices();
+      const currentItemPrice = currentItemsPrices[0];
+
+      expect(currentItemPrice).toEqual(expectedItemPrice);
+    });
+
+    it('Should have item with "Free shipping" label', async () => {
+      const expectedFreeShippingText = 'Free shipping';
+
+      const currentFreeShippingsTexts = await shirtComponent.getAllFreeShippingTexts();
+      const currentFreeShippingText = currentFreeShippingsTexts[0];
+
+      expect(currentFreeShippingText).toEqual(expectedFreeShippingText);
+    });
+
+    it('Should have item with its proper image', async () => {
+      // Using Jest image comparator, Playwright has a better implementation,
+      // but in order to use it, you have to dismiss Jest as a test runner
+      const currentSnapshot = await page.screenshot();
+      expect(currentSnapshot).toMatchSnapshot();
     });
   });
+
+  describe('Step 3 - ', () => {});
 });

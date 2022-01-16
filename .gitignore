@@ -177,3 +177,4 @@ sketch
 
 jest-html-reporters-attach/
 package-lock.json
+__tests__/e2e/__snapshots__/
