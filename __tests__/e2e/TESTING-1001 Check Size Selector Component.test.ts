@@ -6,8 +6,8 @@ import SizeSelectorComponent, {
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
 import Utils from '../../src/tools/Utils';
-import { expectedTitle } from '../validationData/IndexPageData';
-import { expectedTitleTest } from '../validationData/SizeComponentData';
+import { expectedTitle } from '../../src/validationData/IndexPageData';
+import { expectedTitleTest } from '../../src/validationData/SizeComponentData';
 
 jest.setTimeout(300000);
 
@@ -21,17 +21,16 @@ describe(`${process.env.TEST_TITLE} It checks Size Selector Component.`, () => {
   let indexPage: IndexPage;
   let sizeComponent: SizeSelectorComponent;
 
-  // Base URI building references
-  let urlBuilder: URLBuilder;
-  let url: URL;
+  let baseUrl: URL;
 
   beforeAll(async () => {
     browser = await WebDriver.getInstance();
     context = await WebDriver.getContext(browser);
     page = await context.newPage();
 
+    let urlBuilder: URLBuilder;
     urlBuilder = new URLBuilder();
-    url = urlBuilder.getURL();
+    baseUrl = urlBuilder.getURL();
   });
 
   afterAll(async () => {
@@ -44,7 +43,7 @@ describe(`${process.env.TEST_TITLE} It checks Size Selector Component.`, () => {
     it('Should go to Index', async () => {
       indexPage = new IndexPage(page);
 
-      await page.goto(url.href);
+      await page.goto(baseUrl.href);
       await indexPage.waitUntilIsDisplayed();
 
       const title = await indexPage.getTitle();
@@ -89,13 +88,13 @@ describe(`${process.env.TEST_TITLE} It checks Size Selector Component.`, () => {
 
   describe('Step 4 -  Check buttons color', () => {
     it('Should have first button as grey', async () => {
-      const firstBtnColor = await sizeComponent.getButtonColor();
+      const firstBtnColor = await sizeComponent.getFirstButtonColor();
       const grey = 'rgb(236, 236, 236)';
 
       expect(firstBtnColor).toEqual(grey);
     });
 
-    it('Should have buttons color as grey', async () => {
+    it('Should have all buttons colors as grey', async () => {
       const elementHandles = await sizeComponent.getSizeElements();
 
       const grey = 'rgb(236, 236, 236)';

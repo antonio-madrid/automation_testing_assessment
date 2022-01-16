@@ -2,7 +2,9 @@ import { Browser, BrowserContext, Page } from 'playwright';
 import WebDriver from '../../src/core/WebDriver';
 import CartComponent from '../../src/pages/components/CartComponent/CartComponent';
 import ShelfComponent from '../../src/pages/components/ShelfComponent/ShelfComponent';
-import SizeSelectorComponent from '../../src/pages/components/SizeSelectorComponent/SizeSelectorComponent';
+import SizeSelectorComponent, {
+  SizeType
+} from '../../src/pages/components/SizeSelectorComponent/SizeSelectorComponent';
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
 
@@ -20,7 +22,7 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
   let shelfComponent: ShelfComponent;
   let cartComponent: CartComponent;
 
-  let url: URL;
+  let baseUrl: URL;
 
   beforeAll(async () => {
     browser = await WebDriver.getInstance();
@@ -29,7 +31,7 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
 
     let urlBuilder: URLBuilder;
     urlBuilder = new URLBuilder();
-    url = urlBuilder.getURL();
+    baseUrl = urlBuilder.getURL();
   });
 
   afterAll(async () => {
@@ -40,7 +42,7 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
 
   describe('Step 1 - Go to Index', () => {
     it('Should have main page displayed', async () => {
-      await page.goto(url.href);
+      await page.goto(baseUrl.href);
 
       indexPage = new IndexPage(page);
       await indexPage.waitUntilIsDisplayed();
@@ -64,7 +66,8 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
 
   describe('Step 2 - Click XS shirt button', () => {
     it('Should have One item is displayed', async () => {
-      console.log('WIP');
+      await sizeSelectorComponent.selectSize(SizeType.XS);
+      throw new Error('WIP');
     });
   });
 });

@@ -5,7 +5,7 @@ import CartCheckoutComponent from '../../src/pages/components/CartComponent/Cart
 import CartIconComponent from '../../src/pages/components/CartComponent/CartComponents/CartIconComponent';
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
-import { expectedTitle } from '../validationData/IndexPageData';
+import { expectedTitle } from '../../src/validationData/IndexPageData';
 
 jest.setTimeout(300000);
 
@@ -21,17 +21,16 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
   let cartComponent: CartComponent;
   let cartCheckoutComponent: CartCheckoutComponent;
 
-  // Base URI building references
-  let urlBuilder: URLBuilder;
-  let url: URL;
+  let baseUrl: URL;
 
   beforeAll(async () => {
     browser = await WebDriver.getInstance();
     context = await WebDriver.getContext(browser);
     page = await context.newPage();
 
+    let urlBuilder: URLBuilder;
     urlBuilder = new URLBuilder();
-    url = urlBuilder.getURL();
+    baseUrl = urlBuilder.getURL();
   });
 
   afterAll(async () => {
@@ -44,7 +43,7 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
     it('Should go to Index', async () => {
       indexPage = new IndexPage(page);
 
-      await page.goto(url.href);
+      await page.goto(baseUrl.href);
       await indexPage.waitUntilIsDisplayed();
 
       const currentTitle = await indexPage.getTitle();

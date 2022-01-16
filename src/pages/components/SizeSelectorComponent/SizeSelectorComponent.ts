@@ -21,10 +21,9 @@ export default class SizeSelectorComponent extends BasePage {
     value: 'h4.title >>  text=Sizes'
   };
 
-  /** It serves as a base for all button selectors, the rest are created dynamically on the fly. */
   private readonly buttonBaseSelector: Selector = {
     name: this.className,
-    value: 'input[type=checkbox][value='
+    value: 'span.checkmark >> text="'
   };
 
   public constructor(page: Page) {
@@ -39,7 +38,7 @@ export default class SizeSelectorComponent extends BasePage {
   private getSizeButtonSelector(buttonType: SizeType) {
     const buttonSelector: Selector = {
       name: `${this.buttonBaseSelector.name}.${buttonType}`,
-      value: `${this.buttonBaseSelector.value}${buttonType}]`
+      value: `${this.buttonBaseSelector.value}${buttonType}"`
     };
 
     return buttonSelector;
@@ -48,9 +47,15 @@ export default class SizeSelectorComponent extends BasePage {
   /** It reduces repetitive code, creating selectors on the fly. Alternative is getting lots of getters for the purpose. */
   public async getButtonInputValue(sizeType: SizeType) {
     const buttonSelector = this.getSizeButtonSelector(sizeType);
-    const inputLocator = await super.getLocator(buttonSelector);
+    const buttonLocator = await super.getLocator(buttonSelector);
 
-    return inputLocator.inputValue();
+    return buttonLocator.innerText();
+  }
+
+  public async selectSize(sizeType: SizeType) {
+    const buttonSelector = this.getSizeButtonSelector(sizeType);
+    const buttonLocator = await super.getLocator(buttonSelector);
+    await buttonLocator.click();
   }
 
   public async getTitleText() {
@@ -58,10 +63,12 @@ export default class SizeSelectorComponent extends BasePage {
     return titleLocator.innerText();
   }
 
-  public async getButtonColor() {
-    const properLocator = this.page.locator('.filters-available-size label .checkmark').first();
+  public async getFirstButtonColor() {
+    const firstButtonLocator = this.page
+      .locator('.filters-available-size label .checkmark')
+      .first();
 
-    const computerizedCSSstyle = await properLocator.evaluate((HTMLElement) => {
+    const computerizedCSSstyle = await firstButtonLocator.evaluate((HTMLElement) => {
       const element = HTMLElement as Element;
       return window.getComputedStyle(element);
     });
