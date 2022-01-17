@@ -46,6 +46,11 @@ export default class CartListComponent extends BasePage {
     value: 'p.shelf-empty'
   };
 
+  private readonly plusBtnSelector: Selector = {
+    name: `${this.className}.plusBtnSelector`,
+    value: 'button.change-product-button >> text="+"'
+  };
+
   public constructor(page: Page) {
     super(page);
   }
@@ -92,6 +97,15 @@ export default class CartListComponent extends BasePage {
   public async clickItemCrossBtn() {
     const crossBtnLocator = await super.getLocator(this.itemCrossBtnSelector);
     await crossBtnLocator.click();
+  }
+
+  public async clickItemPlusBtn(times?: number) {
+    const plusBtnLocator = await super.getLocator(this.plusBtnSelector);
+    if (times) {
+      await plusBtnLocator.click({ clickCount: times });
+    } else {
+      await plusBtnLocator.click();
+    }
   }
 
   public async getShelfEmptyMsg() {

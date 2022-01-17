@@ -372,4 +372,70 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
       expect(currentDialogMsg).toEqual(expectedDialogMsg);
     });
   });
+
+  describe('Step 13 - Click plus button on new element of cart list', () => {
+    it('Should click plus button of item and increase the quantity', async () => {
+      const expectedItemQuantity = 'Quantity: 2';
+      await cartListComponent.clickItemPlusBtn();
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have subtotal as "$ 21.80"', async () => {
+      const expectedSubtotal = '$ 21.80';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Step 14 and 15 - Click "Checkout"', () => {
+    it('Should click "CHECKOUT" button, display a dialog and click OK', async () => {
+      const expectedDialogMsg = 'Checkout - Subtotal: $ 21.80';
+
+      let currentDialogMsg: string;
+      page.once('dialog', async (dialog) => {
+        currentDialogMsg = dialog.message();
+        dialog.accept();
+      });
+
+      await cartCheckoutComponent.clickCheckout();
+
+      expect(currentDialogMsg).toEqual(expectedDialogMsg);
+    });
+
+    it('Should quantity as 2', async () => {
+      const expectedItemQuantity = 'Quantity: 2';
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have subtotal as "$ 21.80"', async () => {
+      const expectedSubtotal = '$ 21.80';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe.skip('Step 16 - WIP', () => {});
+
+  describe.skip('Final step -  Click plus button 1000000 times', () => {
+    // This step blocks my laptop.
+    // Maximum items added were 1645
+    it('Should click plus button 1000000 times', async () => {
+      await cartListComponent.clickItemPlusBtn(1000000);
+
+      const expectedQuantity = '1000000';
+      const currentQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentQuantity).toEqual(expectedQuantity);
+    });
+  });
 });
