@@ -41,12 +41,21 @@ export default class CartListComponent extends BasePage {
       'div.float-cart__shelf-container >> div.shelf-item >> div.shelf-item__thumb >> img[alt="Cat Tee Black T-Shirt"]'
   };
 
+  private readonly shelfEmptySelector: Selector = {
+    name: `${this.className}.cartIconNumberSelector`,
+    value: 'p.shelf-empty'
+  };
+
   public constructor(page: Page) {
     super(page);
   }
 
   public async waitUntilIsDisplayed() {
     await super.waitUntilIsDisplayedBase(this.itemListContainerSelector);
+  }
+
+  public async waitUntilShelfIsEmpty() {
+    await super.waitUntilIsDisplayedBase(this.shelfEmptySelector);
   }
 
   public async getFirstItemPrice() {
@@ -78,5 +87,15 @@ export default class CartListComponent extends BasePage {
   public async getItemThumbImg() {
     const thumbLocator = await super.getLocator(this.itemThumbSelector);
     return thumbLocator.screenshot();
+  }
+
+  public async clickItemCrossBtn() {
+    const crossBtnLocator = await super.getLocator(this.itemCrossBtnSelector);
+    await crossBtnLocator.click();
+  }
+
+  public async getShelfEmptyMsg() {
+    const shelfEmptyLocator = await super.getLocator(this.shelfEmptySelector);
+    return shelfEmptyLocator.innerText();
   }
 }

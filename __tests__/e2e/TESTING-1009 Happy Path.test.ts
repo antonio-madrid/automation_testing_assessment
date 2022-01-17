@@ -178,4 +178,65 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
       expect(currentSubtotal).toEqual(expectedSubtotal);
     });
   });
+
+  describe('Step 4 - Click "CHECKOUT" button', () => {
+    it('Should click "CHECKOUT" button, display a dialog and click OK', async () => {
+      const expectedDialogMsg = 'Checkout - Subtotal: $ 10.90';
+
+      let currentDialogMsg: string;
+      page.once('dialog', async (dialog) => {
+        currentDialogMsg = dialog.message();
+        dialog.accept();
+      });
+
+      await cartCheckoutComponent.clickCheckout();
+
+      expect(currentDialogMsg).toEqual(expectedDialogMsg);
+    });
+  });
+
+  describe('Step 5 - Click cross button of new item', () => {
+    it('Should click cross button of new item and shelf would be empty', async () => {
+      await cartListComponent.clickItemCrossBtn();
+
+      await cartListComponent.waitUntilShelfIsEmpty();
+    });
+
+    it('Should have cart icon with number 0', async () => {
+      const currentCartIconNumber = await cartIconComponent.getCartIconNumber();
+
+      expect(currentCartIconNumber).toEqual('0');
+    });
+
+    it('Should appears "Add some products in the cart" message on item list', async () => {
+      const expectedShelfEmptyMsg = 'Add some products in the cart';
+      const currentShelfEmptyMsg = await cartListComponent.getShelfEmptyMsg();
+
+      expect(currentShelfEmptyMsg).toContain(expectedShelfEmptyMsg);
+    });
+
+    it('Should have checkout subtotal as "$ 0.00"', async () => {
+      const expectedSubtotal = '$ 0.00';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Step 6 - Click "CHECKOUT" button', () => {
+    it('Should click "CHECKOUT and show a prompt', async () => {
+      const expectedDialogMsg = 'Add some product in the cart!';
+
+      let currentDialogMsg: string;
+      page.once('dialog', async (dialog) => {
+        currentDialogMsg = dialog.message();
+        dialog.accept();
+      });
+
+      await cartCheckoutComponent.clickCheckout();
+
+      expect(currentDialogMsg).toEqual(expectedDialogMsg);
+    });
+  });
 });
