@@ -4,7 +4,7 @@ import playwright from 'playwright';
 import fs from 'fs';
 
 function getEnvironmentFileName() {
-  const envArg = process.argv.filter((arg) => arg.startsWith('-env='))[0];
+  const envArg = process.argv.filter((arg) => arg.startsWith('env='))[0];
 
   let envFileName: string;
   if (envArg) {
