@@ -54,7 +54,7 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
     describe('Step 2 - Open and Close Cart Component', () => {
       it('Should show cart component when clicking its icon', async () => {
         cartIconComponent = new CartIconComponent(page);
-        await cartIconComponent.clickClosedCartIconSelector();
+        await cartIconComponent.clickClosedCartIcon();
 
         cartComponent = new CartComponent(page);
         // If element is not into the DOM, Playwright will throw an error captured by Jest, indicating which element failed to load
@@ -62,13 +62,13 @@ describe(`${process.env.TEST_TITLE} It checks Cart Component.`, () => {
       });
 
       it('Should close cart when clicking "X" button', async () => {
-        await cartIconComponent.clickCloseCartIconSelector();
+        await cartIconComponent.clickCloseCartIcon();
         await cartComponent.waitUntilCartIsNotOpened();
       });
 
       describe('Check dialog', () => {
         it('Should check out nothing', async () => {
-          await cartIconComponent.clickClosedCartIconSelector();
+          await cartIconComponent.clickClosedCartIcon();
           await cartComponent.waitUntilCartIsOpened();
 
           cartCheckoutComponent = new CartCheckoutComponent(page);

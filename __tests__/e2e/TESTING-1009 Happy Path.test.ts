@@ -239,4 +239,137 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
       expect(currentDialogMsg).toEqual(expectedDialogMsg);
     });
   });
+
+  describe('Step 7 - Click "Ok" on displayed prompt', () => {
+    it('Should have shelf empty', async () => {
+      await cartListComponent.waitUntilShelfIsEmpty();
+    });
+
+    // TODO: extract repetead functions: same on line 230 onwards
+    it('Should have cart icon with number 0', async () => {
+      const currentCartIconNumber = await cartIconComponent.getCartIconNumber();
+
+      expect(currentCartIconNumber).toEqual('0');
+    });
+
+    it('Should appears "Add some products in the cart" message on item list', async () => {
+      const expectedShelfEmptyMsg = 'Add some products in the cart';
+      const currentShelfEmptyMsg = await cartListComponent.getShelfEmptyMsg();
+
+      expect(currentShelfEmptyMsg).toContain(expectedShelfEmptyMsg);
+    });
+
+    it('Should have checkout subtotal as "$ 0.00"', async () => {
+      const expectedSubtotal = '$ 0.00';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Step 8 - Click cross icon on left checkout component corner', () => {
+    it('Should click on cart cross icon', async () => {
+      await cartIconComponent.clickCloseCartIcon();
+
+      await cartComponent.waitUntilCartIsNotOpened();
+    });
+  });
+
+  describe('Step 9 - Click cart icon on right corner', () => {
+    it('Should click on cart icon and open cart component', async () => {
+      await cartIconComponent.clickClosedCartIcon();
+
+      await cartComponent.waitUntilCartIsOpened();
+    });
+
+    it('Should have cart icon with number 0', async () => {
+      const currentCartIconNumber = await cartIconComponent.getCartIconNumber();
+
+      expect(currentCartIconNumber).toEqual('0');
+    });
+
+    it('Should appears "Add some products in the cart" message on item list', async () => {
+      const expectedShelfEmptyMsg = 'Add some products in the cart';
+      const currentShelfEmptyMsg = await cartListComponent.getShelfEmptyMsg();
+
+      expect(currentShelfEmptyMsg).toContain(expectedShelfEmptyMsg);
+    });
+
+    it('Should have checkout subtotal as "$ 0.00"', async () => {
+      const expectedSubtotal = '$ 0.00';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Click "Add to cart" on item displayed on shelf', () => {
+    it('Click "Add to cart" on item displayed on shelf', async () => {
+      await shirtComponent.clickAddToCart();
+
+      await cartListComponent.waitUntilIsDisplayed();
+    });
+
+    // TODO: Extract functions, same than line 130 onwards
+    it('Should have cart icon with number 1', async () => {
+      const currentCartIconNumber = await cartIconComponent.getCartIconNumber();
+      expect(currentCartIconNumber).toBe('1');
+    });
+
+    describe('SubStep - Check out new item added', () => {
+      it('Should have its price as $ 10.90', async () => {
+        cartListComponent = new CartListComponent(page);
+        const expectedItemPrice = '$ 10.90';
+
+        const currentItemPrice = await cartListComponent.getFirstItemPrice();
+        expect(currentItemPrice).toEqual(expectedItemPrice);
+      });
+
+      it('Should have its title as "Cat Tee Black T-Shirt"', async () => {
+        const expectedItemName = 'Cat Tee Black T-Shirt';
+
+        const currentItemName = await cartListComponent.getItemTitle();
+
+        expect(currentItemName).toEqual(expectedItemName);
+      });
+
+      it('Should have a cross button visible', async () => {
+        const isCrossBtnVisible = await cartListComponent.isItemCrossBtnVisible();
+        expect(isCrossBtnVisible).toBeTruthy();
+      });
+
+      it('Should have its "Quantity" number as 1', async () => {
+        const expectedQuantity = await cartListComponent.getItemQuantity();
+        expect(expectedQuantity).toContain('Quantity: 1');
+      });
+
+      it('Should have a minus button disabled', async () => {
+        const isMinusBtnDisabled = await cartListComponent.isMinusBtnDisabled();
+        expect(isMinusBtnDisabled).toBeTruthy();
+      });
+
+      it('Should have its proper image', async () => {
+        const thumbImg = await cartListComponent.getItemThumbImg();
+        expect(thumbImg).toMatchSnapshot();
+      });
+    });
+  });
+
+  describe('Step 12 - Click "CHECKOUT" button', () => {
+    it('Should click "CHECKOUT" button, display a dialog and click OK', async () => {
+      const expectedDialogMsg = 'Checkout - Subtotal: $ 10.90';
+
+      let currentDialogMsg: string;
+      page.once('dialog', async (dialog) => {
+        currentDialogMsg = dialog.message();
+        dialog.accept();
+      });
+
+      await cartCheckoutComponent.clickCheckout();
+
+      expect(currentDialogMsg).toEqual(expectedDialogMsg);
+    });
+  });
 });

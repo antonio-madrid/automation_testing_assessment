@@ -28,12 +28,12 @@ export default class CartIconComponent extends BasePage {
     await super.waitUntilIsDisplayedBase(this.closedCartIconSelector);
   }
 
-  public async clickClosedCartIconSelector() {
+  public async clickClosedCartIcon() {
     const closedCartIconLocator = await super.getLocator(this.closedCartIconSelector);
     await closedCartIconLocator.click();
   }
 
-  public async clickCloseCartIconSelector() {
+  public async clickCloseCartIcon() {
     const closeCartIconLocator = await super.getLocator(this.closeCartIconSelector);
     await closeCartIconLocator.click();
   }
