@@ -38,9 +38,30 @@ To start the project up through Docker, use `docker-compose up` and `docker-comp
 
 Use `await page.pause();` to create Playwright breakpoints when debugging, or use that sentence in `npm test` to have the light debug mode.
 
+## Docker
+
+In order to run the app on Docker, follow this commands:
+
+- `docker-compose up` - to create the Docker image
+- `docker run -it --network=host exercise_app bash` - to run Docker
+
+When running the targeted application (eCommerce), this is executed on localhost.
+So, to allow Docker reaching the host localhost, the flag **--network=host** is needed.  
+This will expose host network to Docker, removing Docker isolation feature, that is a bad practice, but for this testing purpose is acceptable.
+
+To run any test under Docker environment, flag `env=prod` must be set.  
+This will run Playwright in headless mode, the only mode able to be running on no GUI OS as Ubuntu Docker image.
+
+- `npm test env=prod testName`
+
+In addition, `npm run docker:test` will run all the test suite.  
+It will take so long because the Jest image comparison. Probably Playwright image comparison works better.
+
 ## Monitoring
 
-Under construction
+There is an endpoint test which could be deployed on a pipeline in order to monitoring that eCommerce application is still up.
+That pipeline may be execute every 15 minutes. This way, if pipeline fails, that would mean eCommerce app is down.  
+Also, a logger could be embedded on this test, to send a message by Kibana, Datadog, Sentry or similar.
 
 #### Ideas:
 
@@ -50,7 +71,6 @@ Under construction
 #### TODO:
 
 - Use facades as CartComponent to encapsulate list of complex Page Object actions.
-- Test Docker environment
 - Breaking test, e.g. order 100000 shirts in order to stress the app.
 - Refactor
 - Unify functions, naming, etc

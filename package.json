@@ -15,11 +15,12 @@
   },
   "scripts": {
     "test": "npx jest --detectOpenHandles --runInBand",
-    "debug": "PWDEBUG=1 npx jest --detectOpenHandles --runInBand",
-    "e2e": "npx jest --detectOpenHandles --runInBand /e2e",
-    "endpoints": "npx jest --detectOpenHandles --runInBand /endpoints",
+    "debug": "PWDEBUG=1 npm test",
+    "e2e": "npm test /e2e",
+    "endpoints": "npm test /endpoints",
+    "monitor": "npm test /endpoints/TESTING-0001",
     "docker:up": "docker-compose up",
-    "docker:stop": "docker-compose up"
+    "docker:test": "npm test env=prod *"
   },
   "devDependencies": {
     "@types/globalthis": "^1.0.1",
