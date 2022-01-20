@@ -59,9 +59,9 @@ It will take so long because the Jest image comparison. Probably Playwright imag
 
 ## Monitoring
 
-There is an endpoint test which could be deployed on a pipeline in order to monitoring that eCommerce application is still up.
+There is an endpoint test which could be deployed on a pipeline in order to monitor that eCommerce application is still up.
 That pipeline may be execute every 15 minutes. This way, if pipeline fails, that would mean eCommerce app is down.  
-Also, a logger could be embedded on this test, to send a message by Kibana, Datadog, Sentry or similar.
+Also, a logger could be embedded on this test, to send a message through Kibana, Datadog, Sentry or similar.
 
 #### Ideas:
 

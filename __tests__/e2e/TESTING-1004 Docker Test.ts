@@ -6,7 +6,7 @@ import { expectedTitle } from '../../src/validationData/IndexPageData';
 
 jest.setTimeout(300000);
 
-describe(`${process.env.TEST_TITLE} Trying Docker network availability connection`, () => {
+describe(`${process.env.TEST_TITLE} Trying out Docker network availability connection`, () => {
   // Browser conf references
   let browser: Browser;
   let context: BrowserContext;
