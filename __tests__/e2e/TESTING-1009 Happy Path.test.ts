@@ -514,6 +514,177 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
     });
   });
 
+  describe('Step 21 - Click plus button on new element of cart list', () => {
+    it('Should click plus button of item and increase the quantity', async () => {
+      const expectedItemQuantity = 'Quantity: 2';
+      await cartListComponent.clickItemPlusBtn();
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have subtotal as "$ 21.80"', async () => {
+      const expectedSubtotal = '$ 21.80';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Step 22 - Click cross icon on left checkout component corner', () => {
+    it('Should click on cart cross icon', async () => {
+      await cartIconComponent.clickCloseCartIcon();
+
+      await cartComponent.waitUntilCartIsNotOpened();
+    });
+
+    it('Should have cart icon with number 2', async () => {
+      const currentCartIconNumber = await cartIconComponent.getCartIconNumber();
+
+      expect(currentCartIconNumber).toEqual('2');
+    });
+  });
+
+  describe('Step 23 - Click cart icon on right corner', () => {
+    it('Should click on cart icon and open cart component', async () => {
+      await cartIconComponent.clickClosedCartIcon();
+
+      await cartComponent.waitUntilCartIsOpened();
+    });
+
+    it('Should quantity as 2', async () => {
+      const expectedItemQuantity = 'Quantity: 2';
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have checkout subtotal as "$ 21.80"', async () => {
+      const expectedSubtotal = '$ 21.80';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Step 24 - Click plus button on new element of cart list 8 times', () => {
+    it('Should click plus button of item and increase the quantity', async () => {
+      const expectedItemQuantity = 'Quantity: 10';
+      await cartListComponent.clickItemPlusBtn(8);
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have subtotal as "$ 109.00"', async () => {
+      const expectedSubtotal = '$ 109.00';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Step 25 - Click minus button on new element of cart list 8 times', () => {
+    it('Should click minus button of item and decrease the quantity', async () => {
+      const expectedItemQuantity = 'Quantity: 2';
+      await cartListComponent.clickItemMinusBtn(8);
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have subtotal as "$ 21.80"', async () => {
+      const expectedSubtotal = '$ 21.80';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Step 26 - Click plus button on new element of cart list 997 times', () => {
+    it('Should click plus button of item and increase the quantity', async () => {
+      const expectedItemQuantity = 'Quantity: 999';
+      await cartListComponent.clickItemPlusBtn(997);
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have subtotal as "$ 10889.10"', async () => {
+      const expectedSubtotal = '$ 10889.10';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Step 27 - Click cross icon on left checkout component corner', () => {
+    it('Should click on cart cross icon', async () => {
+      await cartIconComponent.clickCloseCartIcon();
+
+      await cartComponent.waitUntilCartIsNotOpened();
+    });
+
+    it('Should have cart icon with number 999', async () => {
+      const currentCartIconNumber = await cartIconComponent.getCartIconNumber();
+
+      expect(currentCartIconNumber).toEqual('999');
+    });
+  });
+
+  describe('Step 28 - Click cart icon on right corner', () => {
+    it('Should click on cart icon and open cart component', async () => {
+      await cartIconComponent.clickClosedCartIcon();
+
+      await cartComponent.waitUntilCartIsOpened();
+    });
+
+    it('Should quantity as 999', async () => {
+      const expectedItemQuantity = 'Quantity: 999';
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have checkout subtotal as "$ 10889.10"', async () => {
+      const expectedSubtotal = '$ 10889.10';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Step 29 - Click minus button on new element of cart list 997 times', () => {
+    it('Should click minus button of item and decrease the quantity', async () => {
+      const expectedItemQuantity = 'Quantity: 2';
+      await cartListComponent.clickItemMinusBtn(997);
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have subtotal as "$ 21.80"', async () => {
+      const expectedSubtotal = '$ 21.80';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
   describe.skip('Final step -  Click plus button 1000000 times', () => {
     // This step blocks my laptop.
     // Maximum items added were 1645
