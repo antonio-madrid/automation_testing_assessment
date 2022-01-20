@@ -51,6 +51,11 @@ export default class CartListComponent extends BasePage {
     value: 'button.change-product-button >> text="+"'
   };
 
+  private readonly minusBtnSelector: Selector = {
+    name: `${this.className}.minusBtnSelector`,
+    value: 'button.change-product-button >> text="-"'
+  };
+
   public constructor(page: Page) {
     super(page);
   }
@@ -105,6 +110,15 @@ export default class CartListComponent extends BasePage {
       await plusBtnLocator.click({ clickCount: times });
     } else {
       await plusBtnLocator.click();
+    }
+  }
+
+  public async clickItemMinusBtn(times?: number) {
+    const minusBtnLocator = await super.getLocator(this.minusBtnSelector);
+    if (times) {
+      await minusBtnLocator.click({ clickCount: times });
+    } else {
+      await minusBtnLocator.click();
     }
   }
 

@@ -424,7 +424,95 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
     });
   });
 
-  describe.skip('Step 16 - WIP', () => {});
+  describe('Step 16 - Click minus button on new element of cart list', () => {
+    it('Should click minus button of item and decrease the quantity', async () => {
+      const expectedItemQuantity = 'Quantity: 1';
+      await cartListComponent.clickItemMinusBtn();
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have subtotal as "$ 10.90"', async () => {
+      const expectedSubtotal = '$ 10.90';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  describe('Step 17 and 18 - Click "Checkout"', () => {
+    it('Should click "CHECKOUT" button, display a dialog and click OK', async () => {
+      const expectedDialogMsg = 'Checkout - Subtotal: $ 10.90';
+
+      let currentDialogMsg: string;
+      page.once('dialog', async (dialog) => {
+        currentDialogMsg = dialog.message();
+        dialog.accept();
+      });
+
+      await cartCheckoutComponent.clickCheckout();
+
+      expect(currentDialogMsg).toEqual(expectedDialogMsg);
+    });
+
+    it('Should quantity as 1', async () => {
+      const expectedItemQuantity = 'Quantity: 1';
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have subtotal as "$ 10.90"', async () => {
+      const expectedSubtotal = '$ 10.90';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
+
+  // TODO: extract repeated code to its own function
+  describe('Step 19 - Click cross icon on left checkout component corner', () => {
+    it('Should click on cart cross icon', async () => {
+      await cartIconComponent.clickCloseCartIcon();
+
+      await cartComponent.waitUntilCartIsNotOpened();
+    });
+
+    it('Should have cart icon with number 1', async () => {
+      const currentCartIconNumber = await cartIconComponent.getCartIconNumber();
+
+      expect(currentCartIconNumber).toEqual('1');
+    });
+  });
+
+  describe('Step 20 - Click cart icon on right corner', () => {
+    it('Should click on cart icon and open cart component', async () => {
+      await cartIconComponent.clickClosedCartIcon();
+
+      await cartComponent.waitUntilCartIsOpened();
+    });
+
+    it('Should quantity as 1', async () => {
+      const expectedItemQuantity = 'Quantity: 1';
+
+      const currentItemQuantity = await cartListComponent.getItemQuantity();
+
+      expect(currentItemQuantity).toContain(expectedItemQuantity);
+    });
+
+    it('Should have checkout subtotal as "$ 10.90"', async () => {
+      const expectedSubtotal = '$ 10.90';
+
+      const currentSubtotal = await cartCheckoutComponent.getSubtotal();
+
+      expect(currentSubtotal).toEqual(expectedSubtotal);
+    });
+  });
 
   describe.skip('Final step -  Click plus button 1000000 times', () => {
     // This step blocks my laptop.
