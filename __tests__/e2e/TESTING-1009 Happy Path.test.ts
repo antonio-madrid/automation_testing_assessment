@@ -93,7 +93,7 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
       expect(currentItemTite).toEqual(expectedItemTitle);
     });
 
-    it('Should have item with price "10.90"', async () => {
+    it('Should have item with price "$10.90"', async () => {
       const expectedItemPrice = '$10.90';
 
       const currentItemsPrices = await shirtComponent.getAllItemsPrices();
@@ -245,7 +245,7 @@ describe(`${process.env.TEST_TITLE} first e2e test`, () => {
       await cartListComponent.waitUntilShelfIsEmpty();
     });
 
-    // TODO: extract repetead functions: same on line 230 onwards
+    // TODO: extract repeated functions: same on line 230 onwards
     it('Should have cart icon with number 0', async () => {
       const currentCartIconNumber = await cartIconComponent.getCartIconNumber();
 
