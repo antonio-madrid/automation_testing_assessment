@@ -5,7 +5,7 @@ import URLBuilder from '../../src/tools/URLBuilder';
  * This test may be used as a part of a monitoring process.
  * It can be used in a pipeline which executes only this test every 15 minutes in order to check whether application is still up.
  * */
-describe('Endpoint tests', () => {
+describe('App endpoint monitoring test', () => {
   let axiosParams: AxiosRequestConfig<any>;
 
   beforeAll(async () => {
