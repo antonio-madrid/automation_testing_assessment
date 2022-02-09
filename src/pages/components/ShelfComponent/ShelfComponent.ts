@@ -1,5 +1,6 @@
 import { Page } from 'playwright';
-import BasePage, { Selector } from '../../BasePage';
+import { Selector } from '../../../core/models/Selector';
+import BasePage from '../../BasePage';
 
 // Idea to have this component as a Facade of its subcomponents
 export default class ShelfComponent extends BasePage {

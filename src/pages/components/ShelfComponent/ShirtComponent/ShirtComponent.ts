@@ -1,5 +1,6 @@
 import { Page } from 'playwright';
-import BasePage, { Selector } from '../../../BasePage';
+import { Selector } from '../../../../core/models/Selector';
+import BasePage from '../../../BasePage';
 
 export default class ShirtComponent extends BasePage {
   private readonly className = this.constructor.name;

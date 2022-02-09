@@ -1,4 +1,5 @@
 import { Browser, BrowserContext, Page } from 'playwright';
+import { SizeType } from '../../src/core/models/SizeType';
 import WebDriver from '../../src/core/WebDriver';
 import CartComponent from '../../src/pages/components/CartComponent/CartComponent';
 import CartCheckoutComponent from '../../src/pages/components/CartComponent/CartComponents/CartCheckoutComponent';
@@ -6,9 +7,7 @@ import CartIconComponent from '../../src/pages/components/CartComponent/CartComp
 import CartListComponent from '../../src/pages/components/CartComponent/CartComponents/CartListComponent';
 import ShelfComponent from '../../src/pages/components/ShelfComponent/ShelfComponent';
 import ShirtComponent from '../../src/pages/components/ShelfComponent/ShirtComponent/ShirtComponent';
-import SizeSelectorComponent, {
-  SizeType
-} from '../../src/pages/components/SizeSelectorComponent/SizeSelectorComponent';
+import SizeSelectorComponent from '../../src/pages/components/SizeSelectorComponent/SizeSelectorComponent';
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
 

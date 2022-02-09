@@ -1,16 +1,7 @@
 import { Page } from 'playwright';
-import BasePage, { Selector } from '../../BasePage';
-
-export enum SizeType {
-  XS = 'XS',
-  S = 'S',
-  M = 'M',
-  ML = 'ML',
-  L = 'L',
-  X = 'X',
-  XL = 'XL',
-  XXL = 'XXL'
-}
+import { Selector } from '../../../core/models/Selector';
+import { SizeType } from '../../../core/models/SizeType';
+import BasePage from '../../BasePage';
 
 export default class SizeSelectorComponent extends BasePage {
   private readonly className = this.constructor.name;
@@ -79,5 +70,10 @@ export default class SizeSelectorComponent extends BasePage {
   public async getSizeElements() {
     const properLocator = this.page.locator('.filters-available-size label .checkmark');
     return properLocator.elementHandles();
+  }
+
+  public async getSizeButtonCSSpropertyValue(size: SizeType, cssProperty: string) {
+    const sizeBtnSelector = this.getSizeButtonSelector(size);
+    return super.getComputedCSSProperty(sizeBtnSelector, cssProperty);
   }
 }

@@ -17,7 +17,9 @@ export default class Utils {
 
         const expecValue = args[1];
         if (currentCSSpropValue !== expecValue) {
-          throw new Error(`Size selector buttons are not ${expecValue}`);
+          throw new Error(
+            `Current CSS property value ${currentCSSpropValue} does not match expected CSS property value: ${expecValue}`
+          );
         }
       },
       [cssProperty, expectedValue]

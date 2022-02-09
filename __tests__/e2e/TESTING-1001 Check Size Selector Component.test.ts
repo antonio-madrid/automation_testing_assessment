@@ -1,8 +1,7 @@
 import { Browser, BrowserContext, Page } from 'playwright';
+import { SizeType } from '../../src/core/models/SizeType';
 import WebDriver from '../../src/core/WebDriver';
-import SizeSelectorComponent, {
-  SizeType
-} from '../../src/pages/components/SizeSelectorComponent/SizeSelectorComponent';
+import SizeSelectorComponent from '../../src/pages/components/SizeSelectorComponent/SizeSelectorComponent';
 import IndexPage from '../../src/pages/IndexPage';
 import URLBuilder from '../../src/tools/URLBuilder';
 import Utils from '../../src/tools/Utils';
@@ -115,6 +114,14 @@ describe(`${process.env.TEST_TITLE} It checks Size Selector Component.`, () => {
       // new implementation
       const utils = new Utils();
       await utils.checkCSSProperty(elementHandles[0], 'backgroundColor', grey);
+
+      const expectedCSSPropDisplayValue = 'block';
+      const currentCSSPropDisplayValue = await sizeComponent.getSizeButtonCSSpropertyValue(
+        SizeType.L,
+        'display'
+      );
+
+      expect(currentCSSPropDisplayValue).toEqual(expectedCSSPropDisplayValue);
     });
   });
 });

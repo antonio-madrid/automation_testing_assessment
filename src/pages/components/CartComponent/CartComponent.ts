@@ -1,5 +1,6 @@
 import { Page } from 'playwright';
-import BasePage, { Selector, WaitOptions } from '../../BasePage';
+import { Selector } from '../../../core/models/Selector';
+import BasePage from '../../BasePage';
 
 export default class CartComponent extends BasePage {
   private readonly className = this.constructor.name;
